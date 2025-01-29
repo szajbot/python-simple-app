@@ -99,5 +99,5 @@ def main_menu():
         else:
             print("Invalid choice.")
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main_menu()
