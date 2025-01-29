@@ -22,6 +22,9 @@ class CarRead(BaseModel):
 class DriverCreate(BaseModel):
     name: str
 
+class DriverUpdate(BaseModel):
+    name: str
+
 class DriverRead(BaseModel):
     id: int
     name: str

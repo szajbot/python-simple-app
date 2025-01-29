@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from models import Driver, Car
-from schemas import CarCreate, CarUpdate, DriverCreate
+from schemas import CarCreate, CarUpdate, DriverCreate, DriverUpdate
 
 def create_driver(db: Session, driver: DriverCreate):
     db_driver = Driver(name=driver.name)
@@ -27,6 +27,14 @@ def get_cars(db: Session):
 
 def get_car(db: Session, car_id: int):
     return db.query(Car).filter(Car.id == car_id).first()
+
+def update_driver(db: Session, driver_id: int, driver: DriverUpdate):
+    db_driver = db.query(Driver).filter(Driver.id == driver_id).first()
+    if db_driver:
+        db_driver.name = driver.name
+        db.commit()
+        db.refresh(db_driver)
+    return db_driver
 
 def update_car(db: Session, car_id: int, car: CarUpdate):
     db_car = db.query(Car).filter(Car.id == car_id).first()
