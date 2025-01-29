@@ -75,11 +75,11 @@ def create_driver():
     driver = {
         "name": name,
     }
-    response = requests.post(f"{API_BASE_URL}/driver", json=driver)
+    response = requests.post(f"{API_BASE_URL}/driver/", json=driver)
     if response.status_code == 200:
-        print("Car created successfully.")
+        print("Driver created successfully.")
     else:
-        print("Failed to create car.")
+        print("Failed to create driver.")
 
 def update_driver():
     driver_id = input("Enter driver ID to update name: ")
@@ -99,7 +99,7 @@ def delete_driver():
     if response.status_code == 204:
         print("Driver deleted successfully.")
     else:
-        print("Failed to delete car.")
+        print("Failed to delete driver.")
 
 def main_menu():
     while True:
@@ -115,9 +115,9 @@ def main_menu():
         print("6. Update a Car")
         print("7. Delete a Car")
 
-        print("8. Create a Car")
-        print("9. Update a Car")
-        print("10. Delete a Car")
+        print("8. Create a Driver")
+        print("9. Update a Driver")
+        print("10. Delete a Driver")
 
         print("11. Exit")
 

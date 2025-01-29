@@ -1,2 +1,4 @@
 # ignore ALL database files
 *.db
+
+__pycache__/
