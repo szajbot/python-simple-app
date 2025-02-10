@@ -3,14 +3,14 @@ from models import Driver, Car
 from schemas import CarCreate, CarUpdate, DriverCreate, DriverUpdate
 
 def create_driver(db: Session, driver: DriverCreate):
-    db_driver = Driver(**driver.dict())
+    db_driver = Driver(**driver.model_dump())
     db.add(db_driver)
     db.commit()
     db.refresh(db_driver)
     return db_driver
 
 def create_car(db: Session, car: CarCreate):
-    db_car = Car(**car.dict())
+    db_car = Car(**car.model_dump())
     db.add(db_car)
     db.commit()
     db.refresh(db_car)
