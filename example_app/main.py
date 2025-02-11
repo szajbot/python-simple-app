@@ -18,7 +18,7 @@ def get_car_drivers():
 
 def get_car():
     car_id= input("Enter car ID to retrieve: ")
-    response = requests.get(f"{API_BASE_URL}/car/{car_id}")
+    response = requests.get(f"{API_BASE_URL}/cars/{car_id}")
     if response.status_code == 200:
         print("Car Details:\n", response.json())
     else:
@@ -26,7 +26,7 @@ def get_car():
 
 def get_car_driver():
     driver_id = input("Enter driver ID to retrieve: ")
-    response = requests.get(f"{API_BASE_URL}/driver/{driver_id}")
+    response = requests.get(f"{API_BASE_URL}/drivers/{driver_id}")
     if response.status_code == 200:
         print("Driver Details: \n", response.json())
     else:
@@ -36,11 +36,13 @@ def create_car():
     brand= input("Enter car brand: ")
     model = input("Enter car model: ")
     driver_id = input("Enter driver ID: ")
+    registration = input("Enter car registration: ")
     car = {
         "brand": brand,
         "model": model,
-        "driver_id": int(driver_id)}
-    response = requests.post(f"{API_BASE_URL}/car", json=car)
+        "driver_id": int(driver_id),
+        "registration": registration}
+    response = requests.post(f"{API_BASE_URL}/cars", json=car)
     if response.status_code == 200:
         print("Car created successfully.")
     else:
@@ -56,7 +58,7 @@ def update_car():
         "model": model,
         "driver_id": int(driver_id)
     }
-    response = requests.put(f"{API_BASE_URL}/car/{car_id}", json=car)
+    response = requests.put(f"{API_BASE_URL}/cars/{car_id}", json=car)
     if response.status_code == 200:
         print("Car updated successfully.")
     else:
@@ -64,7 +66,7 @@ def update_car():
 
 def delete_car():
     car_id = input("Enter car ID to delete: ")
-    response = requests.delete(f"{API_BASE_URL}/car/{car_id}")
+    response = requests.delete(f"{API_BASE_URL}/cars/{car_id}")
     if response.status_code == 204:
         print("Car deleted successfully.")
     else:
@@ -72,10 +74,12 @@ def delete_car():
 
 def create_driver():
     name = input("Enter new name: ")
+    surname = input("Enter new surname: ")
     driver = {
         "name": name,
+        "surname": surname,
     }
-    response = requests.post(f"{API_BASE_URL}/driver/", json=driver)
+    response = requests.post(f"{API_BASE_URL}/drivers/", json=driver)
     if response.status_code == 200:
         print("Driver created successfully.")
     else:
@@ -87,7 +91,7 @@ def update_driver():
     driver = {
         "name": name,
     }
-    response = requests.patch(f"{API_BASE_URL}/driver/{driver_id}", json=driver)
+    response = requests.patch(f"{API_BASE_URL}/drivers/{driver_id}", json=driver)
     if response.status_code == 200:
         print("Driver name updated successfully.")
     else:
@@ -95,7 +99,7 @@ def update_driver():
 
 def delete_driver():
     driver_id = input("Enter driver ID to delete: ")
-    response = requests.delete(f"{API_BASE_URL}/driver/{driver_id}")
+    response = requests.delete(f"{API_BASE_URL}/drivers/{driver_id}")
     if response.status_code == 204:
         print("Driver deleted successfully.")
     else:

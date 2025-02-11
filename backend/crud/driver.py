@@ -1,11 +1,15 @@
 from sqlalchemy.orm import Session
 
 from backend.models import Driver
-from backend.schemas import DriverCreate, DriverUpdate
+from backend.schemas.driver import DriverCreate, DriverUpdate
 
 
 def create_driver(db: Session, driver: DriverCreate):
-    db_driver = Driver(**driver.model_dump())
+    db_driver = Driver(
+        surname=driver.surname,
+        name=driver.name,
+        account_balance=0
+    )
     db.add(db_driver)
     db.commit()
     db.refresh(db_driver)
