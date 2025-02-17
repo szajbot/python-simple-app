@@ -31,6 +31,10 @@ def read_driver(driver_id: int, db: Session = Depends(get_db)):
 def create_driver(driver: driver_schema.DriverCreate, db: Session = Depends(get_db)):
     return driver_crud.create_driver(db=db, driver=driver)
 
+@router.post("/{user_id}/{balance}", response_model=driver_schema.DriverRead)
+def update_driver_balance(driver_id: int, balance: float, db: Session = Depends(get_db)):
+    return driver_crud.update_driver_balance(db=db, driver_id=driver_id, balance=balance)
+
 
 @router.put("/{driver_id}", response_model=driver_schema.DriverRead)
 def update_driver(driver_id: int, driver: driver_schema.DriverUpdate, db: Session = Depends(get_db)):

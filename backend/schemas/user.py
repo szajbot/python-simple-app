@@ -13,6 +13,8 @@ class UserLogin(BaseModel):
 class UserRegister(BaseModel):
     password: str
     login: str
+    name: str
+    surname: str
 
 class UserRead(BaseModel):
     id: int

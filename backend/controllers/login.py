@@ -23,14 +23,14 @@ def login(user: user_schema.UserLogin, db: Session = Depends(get_db)):
     if not db_user or db_user.password != user.password:
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    return {"message": "Login successful"}
+    return {"message": "Login successful", "user": {"id": db_user.id}}
 
 @router.post("/register")
 def register(user: user_schema.UserRegister, db: Session = Depends(get_db)):
     print("debug")
     db_user = user_crud.register_user(db, user)
 
-    return {"message": "Login successful", "user": {"id": db_user.id}}
+    return {"message": "Registration successful"}
 
 @router.get("/", response_model=List[user_schema.UserRead])
 def read_user(db: Session = Depends(get_db)):
