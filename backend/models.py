@@ -7,10 +7,12 @@ Base = declarative_base()
 class Driver(Base):
     __tablename__ = 'driver'
     id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     name = Column(String, index=True)
     surname = Column(String, index=True)
     account_balance = Column(Numeric, index=True)
 
+    users = relationship("User", back_populates="drivers")
     cars = relationship("Car", back_populates="driver", cascade="all, delete-orphan")
 
 class Car(Base):
@@ -34,3 +36,11 @@ class Ticket(Base):
     payed = Column(Boolean, index=True)
 
     car = relationship("Car", back_populates="tickets")
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True, index=True)
+    login = Column(String, index=True)
+    password = Column(String, index=True)
+
+    drivers = relationship("Driver", back_populates="users", cascade="all, delete-orphan")

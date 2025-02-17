@@ -1,0 +1,46 @@
+from http.client import HTTPException
+
+from sqlalchemy.orm import Session
+from backend.models import User
+from backend.schemas.user import UserCreate, UserLogin, UserRegister
+
+
+def login_user(db: Session, user: UserLogin):
+    db_user = db.query(User).filter(User.login == user.login).first()
+    return db_user
+
+def register_user(db: Session, user: UserRegister):
+    existing_user = db.query(User).filter(User.login == user.login).first()
+
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    else:
+        new_user = User(login=user.login, password=user.password)  # Store password as plain text
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+        return new_user
+
+
+
+def create_user(db: Session, user: UserCreate):
+    db_user = User(**user.model_dump())
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+def get_users(db: Session):
+    return db.query(User).all()
+
+def get_user(db: Session, user_id: int):
+    return db.query(User).filter(User.id == user_id).first()
+
+def delete_user(db: Session, ticket_id: int):
+    db_ticket = db.query(User).filter(User.id == ticket_id).first()
+    if db_ticket:
+        db.delete(db_ticket)
+        db.commit()
+    return db_ticket
+
+

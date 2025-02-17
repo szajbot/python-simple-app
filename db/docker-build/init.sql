@@ -6,11 +6,23 @@ GRANT ALL PRIVILEGES ON DATABASE backend TO backendUser;
 
 \c backend;
 
+CREATE TABLE users (
+  id SERIAL NOT NULL PRIMARY KEY,
+  password VARCHAR(255) NOT NULL,
+  login VARCHAR(255) NOT NULL
+
+);
+
+ALTER TABLE users OWNER to backendUser;
+
 CREATE TABLE driver (
   id SERIAL NOT NULL PRIMARY KEY,
+  user_id INT NOT NULL,
   name VARCHAR(255),
   surname VARCHAR(255),
-  account_balance DECIMAL(10, 2)
+  account_balance DECIMAL(10, 2),
+
+  CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
 ALTER TABLE driver OWNER to backendUser;
@@ -21,6 +33,7 @@ CREATE TABLE car (
   brand VARCHAR(255),
   model VARCHAR(255),
   registration VARCHAR(255) NOT NULL,
+
   CONSTRAINT fk_driver FOREIGN KEY(driver_id) REFERENCES driver(id)
 );
 
