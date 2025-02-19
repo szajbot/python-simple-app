@@ -31,9 +31,9 @@ class Ticket(Base):
     id = Column(Integer, primary_key=True, index=True)
     car_id = Column(Integer, ForeignKey("car.id"), nullable=False)
     entrance_date = Column(String, index=True)
-    exit_date = Column(String, index=True)
-    amount = Column(Numeric, index=True)
-    payed = Column(Boolean, index=True)
+    exit_date = Column(String, index=True, nullable=True)
+    amount = Column(Numeric, index=True, nullable=True)
+    payed = Column(Boolean, index=True, nullable=True)
 
     car = relationship("Car", back_populates="tickets")
 

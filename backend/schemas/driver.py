@@ -9,10 +9,10 @@ class DriverCreate(BaseModel):
 class DriverUpdate(BaseModel):
     name: str
     surname: str
-    account_balance: float
 
 
 class DriverRead(BaseModel):
+    user_id: int
     id: int
     name: str
     surname: str

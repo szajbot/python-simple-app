@@ -34,3 +34,7 @@ def update_car(db: Session, car_id: int, car: CarUpdate):
         db.commit()
         db.refresh(db_car)
     return db_car
+
+
+def get_car_for_driver(db: Session, driver_id: int):
+    return db.query(Car).filter(Car.driver_id == driver_id).first()

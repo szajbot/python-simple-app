@@ -14,14 +14,15 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
+
 @router.get("/", response_model=List[driver_schema.DriverRead])
 def read_drivers(db: Session = Depends(get_db)):
     return driver_crud.get_drivers(db=db)
 
 
-@router.get("/{driver_id}", response_model=driver_schema.DriverRead)
-def read_driver(driver_id: int, db: Session = Depends(get_db)):
-    driver = driver_crud.get_driver(db=db, driver_id=driver_id)
+@router.get("/{user_id}", response_model=driver_schema.DriverRead)
+def read_driver(user_id: int, db: Session = Depends(get_db)):
+    driver = driver_crud.get_driver(db=db, user_id=user_id)
     if driver is None:
         raise HTTPException(status_code=404, detail="Driver not found")
     return driver
@@ -31,9 +32,10 @@ def read_driver(driver_id: int, db: Session = Depends(get_db)):
 def create_driver(driver: driver_schema.DriverCreate, db: Session = Depends(get_db)):
     return driver_crud.create_driver(db=db, driver=driver)
 
+
 @router.post("/{user_id}/{balance}", response_model=driver_schema.DriverRead)
-def update_driver_balance(driver_id: int, balance: float, db: Session = Depends(get_db)):
-    return driver_crud.update_driver_balance(db=db, driver_id=driver_id, balance=balance)
+def update_driver_balance(user_id: int, balance: float, db: Session = Depends(get_db)):
+    return driver_crud.update_driver_balance(db=db, user_id=user_id, balance=balance)
 
 
 @router.put("/{driver_id}", response_model=driver_schema.DriverRead)

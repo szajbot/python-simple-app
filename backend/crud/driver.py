@@ -1,3 +1,5 @@
+import decimal
+
 from sqlalchemy.orm import Session
 
 from backend.models import Driver
@@ -20,8 +22,8 @@ def get_drivers(db: Session):
     return db.query(Driver).all()
 
 
-def get_driver(db: Session, driver_id: int):
-    return db.query(Driver).filter(Driver.id == driver_id).first()
+def get_driver(db: Session, user_id: int):
+    return db.query(Driver).filter(Driver.user_id == user_id).first()
 
 
 def update_driver(db: Session, driver_id: int, driver: DriverUpdate):
@@ -38,4 +40,12 @@ def delete_driver(db: Session, driver_id: int):
     if db_driver:
         db.delete(db_driver)
         db.commit()
+    return db_driver
+
+
+def update_driver_balance(db: Session, user_id: int, balance: float):
+    db_driver = db.query(Driver).filter(Driver.user_id == user_id).first()
+    db_driver.account_balance = db_driver.account_balance + decimal.Decimal(balance)
+    db.commit()
+    db.refresh(db_driver)
     return db_driver

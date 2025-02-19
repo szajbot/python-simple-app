@@ -2,9 +2,9 @@ from pydantic import BaseModel
 
 
 class CarCreate(BaseModel):
+    driver_id: int
     brand: str
     model: str
-    driver_id: int
     registration: str
 
 

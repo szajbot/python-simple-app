@@ -13,6 +13,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
+
 @router.get("/", response_model=List[car_schema.CarRead])
 def read_cars(db: Session = Depends(get_db)):
     cars = car_crud.get_cars(db=db)
@@ -27,7 +28,15 @@ def read_car(car_id: int, db: Session = Depends(get_db)):
     return car
 
 
-@router.post("/", response_model=car_schema.CarCreate)
+@router.get("/driver/{driver_id}", response_model=car_schema.CarRead)
+def read_car_for_driver(driver_id: int, db: Session = Depends(get_db)):
+    car = car_crud.get_car_for_driver(db=db, driver_id=driver_id)
+    if car is None:
+        raise HTTPException(status_code=404, detail="Car not found")
+    return car
+
+
+@router.post("", response_model=car_schema.CarCreate)
 def create_car(car: car_schema.CarCreate, db: Session = Depends(get_db)):
     return car_crud.create_car(db=db, car=car)
 
