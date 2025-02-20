@@ -18,6 +18,9 @@ class DriverRead(BaseModel):
     surname: str
     account_balance: float
 
+class DriverBalance(BaseModel):
+    account_balance: float
+
 
 class DriverDelete(BaseModel):
     id: int

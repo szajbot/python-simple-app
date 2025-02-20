@@ -49,3 +49,7 @@ def update_driver_balance(db: Session, user_id: int, balance: float):
     db.commit()
     db.refresh(db_driver)
     return db_driver
+
+
+def get_driver_balance(db: Session, user_id: int):
+    return db.query(Driver).filter(Driver.user_id == user_id).first()

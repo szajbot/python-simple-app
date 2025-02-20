@@ -27,6 +27,10 @@ def read_driver(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Driver not found")
     return driver
 
+@router.get("/{user_id}/balance", response_model=driver_schema.DriverRead)
+def get_driver_balance(user_id: int, db: Session = Depends(get_db)):
+    driver = driver_crud.get_driver_balance(db=db, user_id=user_id)
+    return driver
 
 @router.post("/", response_model=driver_schema.DriverCreate)
 def create_driver(driver: driver_schema.DriverCreate, db: Session = Depends(get_db)):
