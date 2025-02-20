@@ -7,7 +7,6 @@ app = FastAPI()
 app.include_router(car.router)
 app.include_router(driver.router)
 app.include_router(ticket.router)
-
 app.include_router(login.router)
 
 if __name__ == "__main__":

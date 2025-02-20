@@ -23,6 +23,19 @@ class TicketRead(BaseModel):
     amount: Optional[float]
     payed: Optional[bool]
 
+class DeactivateTicketWithDetails(BaseModel):
+    id: int
+    car_id: int
+    entrance_date: datetime
+    exit_date: datetime
+    amount: float
+    payed: bool
+
+    registration: str
+    model: str
+    brand: str
+
+
 
 class TicketDelete(BaseModel):
     id: int

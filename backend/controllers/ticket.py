@@ -23,9 +23,13 @@ def read_tickets(db: Session = Depends(get_db)):
 def read_tickets(user_id: int, db: Session = Depends(get_db)):
     return ticket_crud.get_active_tickets_for_user(db=db, user_id=user_id)
 
-@router.get("/user/{user_id}/notActive", response_model=List[ticket_schema.TicketRead])
+@router.get("/user/{user_id}/deactivate", response_model=List[ticket_schema.DeactivateTicketWithDetails])
 def read_tickets(user_id: int, db: Session = Depends(get_db)):
     return ticket_crud.get_not_active_tickets_for_user(db=db, user_id=user_id)
+
+@router.post("/pay/{user_id}/{ticket_id}", response_model=ticket_schema.TicketRead)
+def read_tickets(user_id: int, ticket_id: int, db: Session = Depends(get_db)):
+    return ticket_crud.pay_for_ticket(db=db, user_id=user_id, ticket_id=ticket_id)
 
 @router.get("/{ticket_id}", response_model=ticket_schema.TicketRead)
 def read_ticket(ticket_id: int, db: Session = Depends(get_db)):
