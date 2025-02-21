@@ -46,16 +46,9 @@ def read_ticket_for_user(user_id: int, db: Session = Depends(get_db)):
     return ticket_crud.get_tickets_for_user(db=db, user_id=user_id)
 
 
-@router.delete("/{ticket_id}")
-def delete_ticket(ticket_id: int, db: Session = Depends(get_db)):
-    ticket_crud.delete_ticket_by_id(db=db, ticket_id=ticket_id)
-    return
-
-
 @router.post("", status_code=HTTP_201_CREATED)
 def create_ticket(ticket: ticket_schema.TicketCreate, db: Session = Depends(get_db)):
-    ticket = ticket_crud.create_ticket(db=db, ticket=ticket)
-    return {"id": ticket.id}
+    return ticket_crud.create_ticket(db=db, ticket=ticket)
 
 
 @router.put("/{ticket_id}", response_model=ticket_schema.TicketUpdate)

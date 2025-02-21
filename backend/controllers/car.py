@@ -16,24 +16,17 @@ router = APIRouter(
 
 @router.get("/", response_model=List[car_schema.CarRead])
 def read_cars(db: Session = Depends(get_db)):
-    cars = car_crud.get_cars(db=db)
-    return cars
+    return car_crud.get_cars(db=db)
 
 
 @router.get("/{car_id}", response_model=car_schema.CarRead)
 def read_car(car_id: int, db: Session = Depends(get_db)):
-    car = car_crud.get_car(db=db, car_id=car_id)
-    if car is None:
-        raise HTTPException(status_code=404, detail="Car not found")
-    return car
+    return car_crud.get_car(db=db, car_id=car_id)
 
 
 @router.get("/driver/{driver_id}", response_model=car_schema.CarRead)
 def read_car_for_driver(driver_id: int, db: Session = Depends(get_db)):
-    car = car_crud.get_car_for_driver(db=db, driver_id=driver_id)
-    if car is None:
-        raise HTTPException(status_code=404, detail="Car not found")
-    return car
+    return car_crud.get_car_for_driver(db=db, driver_id=driver_id)
 
 
 @router.post("", response_model=car_schema.CarCreate)
@@ -48,7 +41,4 @@ def update_car(car_id: int, car: car_schema.CarUpdate, db: Session = Depends(get
 
 @router.delete("/{car_id}", status_code=204)
 def delete_car(car_id: int, db: Session = Depends(get_db)):
-    car = car_crud.delete_car(db=db, car_id=car_id)
-    if car is None:
-        raise HTTPException(status_code=404, detail="Car not found")
-    return car
+    return car_crud.delete_car(db=db, car_id=car_id)

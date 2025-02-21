@@ -17,20 +17,13 @@ router = APIRouter(
 
 @router.post("/login")
 def login(user: user_schema.UserLogin, db: Session = Depends(get_db)):
-    print("debug")
-    db_user = user_crud.login_user(db, user)
+    return user_crud.login_user(db, user)
 
-    if not db_user or db_user.password != user.password:
-        raise HTTPException(status_code=401, detail="Invalid email or password")
-
-    return {"message": "Login successful", "user": {"id": db_user.id}}
 
 @router.post("/register")
 def register(user: user_schema.UserRegister, db: Session = Depends(get_db)):
-    print("debug")
-    db_user = user_crud.register_user(db, user)
+    return user_crud.register_user(db, user)
 
-    return {"message": "Registration successful"}
 
 @router.get("/", response_model=List[user_schema.UserRead])
 def read_user(db: Session = Depends(get_db)):
@@ -39,10 +32,7 @@ def read_user(db: Session = Depends(get_db)):
 
 @router.get("/{user_id}", response_model=user_schema.UserRead)
 def read_user(user_id: int, db: Session = Depends(get_db)):
-    user = user_crud.get_user(db=db, user_id=user_id)
-    if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return user
+    return user_crud.get_user(db=db, user_id=user_id)
 
 
 @router.post("/", response_model=user_schema.UserCreate)
