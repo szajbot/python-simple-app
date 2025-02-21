@@ -1,5 +1,6 @@
 import decimal
 
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from backend.models import Driver
@@ -23,7 +24,10 @@ def get_drivers(db: Session):
 
 
 def get_driver(db: Session, user_id: int):
-    return db.query(Driver).filter(Driver.user_id == user_id).first()
+    db_user = db.query(Driver).filter(Driver.user_id == user_id).first()
+    if not db_user:
+        raise HTTPException(status_code=404, detail="Driver not found")
+    return db_user
 
 
 def update_driver(db: Session, driver_id: int, driver: DriverUpdate):
@@ -32,6 +36,8 @@ def update_driver(db: Session, driver_id: int, driver: DriverUpdate):
         db_driver.name = driver.name
         db.commit()
         db.refresh(db_driver)
+    else:
+        raise HTTPException(status_code=404, detail="Driver not found")
     return db_driver
 
 
@@ -40,6 +46,8 @@ def delete_driver(db: Session, driver_id: int):
     if db_driver:
         db.delete(db_driver)
         db.commit()
+    else:
+        raise HTTPException(status_code=404, detail="Driver not found")
     return db_driver
 
 

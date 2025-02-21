@@ -1,5 +1,4 @@
-from http.client import HTTPException
-
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from backend.models import User, Driver
 from backend.schemas.user import UserCreate, UserLogin, UserRegister
@@ -7,6 +6,8 @@ from backend.schemas.user import UserCreate, UserLogin, UserRegister
 
 def login_user(db: Session, user: UserLogin):
     db_user = db.query(User).filter(User.login == user.login).first()
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User or login invalid")
     return db_user
 
 
@@ -14,7 +15,7 @@ def register_user(db: Session, user: UserRegister):
     existing_user = db.query(User).filter(User.login == user.login).first()
 
     if existing_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(status_code=403, detail="Email already registered")
     else:
         new_user = User(login=user.login, password=user.password)  # Store password as plain text
         db.add(new_user)
@@ -29,6 +30,9 @@ def register_user(db: Session, user: UserRegister):
 
 
 def create_user(db: Session, user: UserCreate):
+    existing_user = db.query(User).filter(User.login == user.login).first()
+    if existing_user:
+        raise HTTPException(status_code=409, detail="User is already registered")
     db_user = User(**user.model_dump())
     db.add(db_user)
     db.commit()
