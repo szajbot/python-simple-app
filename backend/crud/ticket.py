@@ -89,7 +89,13 @@ def get_tickets_for_user(db: Session, user_id: int):
 
 
 def get_active_tickets_for_user(db: Session, user_id: int):
-    return get_tickets_for_user_filtered_by_exit(db, user_id, have_exit_time=False)
+    return (
+        db.query(Ticket.id, Ticket.car_id, Car.registration, Ticket.entrance_date, Ticket.exit_date,
+                 Ticket.amount, Ticket.payed)
+        .join(Car, Ticket.car_id == Car.id)
+        .filter(Car.driver_id == user_id, Ticket.exit_date.is_(None))
+        .all()
+    )
 
 
 def get_not_active_tickets_for_user(db: Session, user_id: int):

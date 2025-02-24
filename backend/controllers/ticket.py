@@ -21,7 +21,7 @@ def read_tickets(db: Session = Depends(get_db)):
     return ticket_crud.get_tickets(db=db)
 
 
-@router.get("/user/{user_id}/active", response_model=List[ticket_schema.TicketRead])
+@router.get("/user/{user_id}/active", response_model=List[ticket_schema.ActiveTicketRead])
 def read_tickets(user_id: int, db: Session = Depends(get_db)):
     return ticket_crud.get_active_tickets_for_user(db=db, user_id=user_id)
 

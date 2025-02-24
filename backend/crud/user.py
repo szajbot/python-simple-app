@@ -53,4 +53,6 @@ def delete_user(db: Session, ticket_id: int):
     if db_ticket:
         db.delete(db_ticket)
         db.commit()
+    else:
+        raise HTTPException(status_code=404, detail="User not found")
     return db_ticket

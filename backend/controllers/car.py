@@ -14,7 +14,7 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=List[car_schema.CarRead])
+@router.get("", response_model=List[car_schema.CarRead])
 def read_cars(db: Session = Depends(get_db)):
     return car_crud.get_cars(db=db)
 
