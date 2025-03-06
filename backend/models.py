@@ -30,6 +30,7 @@ class Ticket(Base):
     __tablename__ = 'ticket'
     id = Column(Integer, primary_key=True, index=True)
     car_id = Column(Integer, ForeignKey("car.id"), nullable=False)
+    parking_id = Column(Integer, index=True)
     entrance_date = Column(String, index=True)
     exit_date = Column(String, index=True, nullable=True)
     amount = Column(Numeric, index=True, nullable=True)
@@ -44,3 +45,11 @@ class User(Base):
     password = Column(String, index=True)
 
     drivers = relationship("Driver", back_populates="users", cascade="all, delete-orphan")
+
+class Parking(Base):
+    __tablename__ = 'parking'
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    address = Column(String, index=True)
+    free_spots = Column(Integer, index=True)
+    occupied_spots = Column(Integer, index=True)

@@ -3,7 +3,7 @@ import decimal
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from backend.models import Driver
+from backend.models import Driver, Car
 from backend.schemas.driver import DriverCreate, DriverUpdate
 
 
@@ -61,3 +61,9 @@ def update_driver_balance(db: Session, user_id: int, balance: float):
 
 def get_driver_balance(db: Session, user_id: int):
     return db.query(Driver).filter(Driver.user_id == user_id).first()
+
+
+def get_drivers_with_details(db: Session):
+    return (db.query(Driver.id, Driver.name, Driver.surname, Driver.account_balance, Car.brand, Car.model, Car.registration)
+            .join(Car, Driver.id == Car.driver_id)
+            .all())

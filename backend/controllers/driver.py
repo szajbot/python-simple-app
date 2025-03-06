@@ -19,6 +19,9 @@ router = APIRouter(
 def read_drivers(db: Session = Depends(get_db)):
     return driver_crud.get_drivers(db=db)
 
+@router.get("/details", response_model=List[driver_schema.DriverRead])
+def get_drivers_with_details(db: Session = Depends(get_db)):
+    return driver_crud.get_drivers_with_details(db=db)
 
 @router.get("/{user_id}", response_model=driver_schema.DriverRead)
 def read_driver(user_id: int, db: Session = Depends(get_db)):

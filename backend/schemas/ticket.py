@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 class TicketCreate(BaseModel):
     car_id: int
+    parking_id: int
     entrance_date: datetime
 
 
@@ -18,6 +19,8 @@ class TicketUpdate(BaseModel):
 class TicketRead(BaseModel):
     id: int
     car_id: int
+    address: str
+    name: str
     entrance_date: datetime
     exit_date: Optional[datetime]
     amount: Optional[float]
@@ -26,6 +29,8 @@ class TicketRead(BaseModel):
 class ActiveTicketRead(BaseModel):
     id: int
     car_id: int
+    address: str
+    name: str
     registration: str
     entrance_date: datetime
     exit_date: Optional[datetime]

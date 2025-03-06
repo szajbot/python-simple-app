@@ -5,6 +5,14 @@ class DriverCreate(BaseModel):
     name: str
     surname: str
 
+class DriverDetails(BaseModel):
+    id: int
+    name: str
+    surname: str
+    account_balance: float
+    brand: str
+    model: str
+    registration: str
 
 class DriverUpdate(BaseModel):
     name: str
