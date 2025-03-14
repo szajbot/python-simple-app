@@ -18,6 +18,10 @@ router = APIRouter(
 def read_cars(db: Session = Depends(get_db)):
     return car_crud.get_cars(db=db)
 
+@router.get("/expanded", response_model=List[car_schema.CarReadExpanded])
+def read_cars(db: Session = Depends(get_db)):
+    return car_crud.get_cars_expanded(db=db)
+
 
 @router.get("/{car_id}", response_model=car_schema.CarRead)
 def read_car(car_id: int, db: Session = Depends(get_db)):

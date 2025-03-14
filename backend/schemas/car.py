@@ -22,6 +22,14 @@ class CarRead(BaseModel):
     model: str
     registration: str
 
+class CarReadExpanded(BaseModel):
+    id: int
+    driver_id: int
+    name: str
+    surname: str
+    brand: str
+    model: str
+    registration: str
 
 class CarDelete(BaseModel):
     id: int
