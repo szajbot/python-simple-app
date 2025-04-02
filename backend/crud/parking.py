@@ -5,7 +5,7 @@ from backend.models import Parking
 
 
 def get_parkings(db: Session):
-    return db.query(Parking).all()
+    return db.query(Parking).order_by(Parking.id).all()
 
 
 def occupy_spot(db: Session, parking_id: int):

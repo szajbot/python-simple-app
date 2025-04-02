@@ -63,6 +63,9 @@ CREATE TABLE parking (
 INSERT INTO parking (name, address, free_spots, occupied_spots)
 VALUES
   ('Parking UNIWERSUM', 'Al. Jerozolimskie 56, 00-803 Warszawa', 174, 26),
-  ('East Side Parking Garage', '456 East St, Suburbs', 24, 46);
+  ('Parking Centrum', 'ul. Marszalkowska 104, 00-017 Warszawa', 24, 46),
+  ('Parking Stare Miasto', 'ul. Miodowa 10, 00-251 Warszawa', 92, 8),
+  ('Parking Dworzec Centralny', 'Al. Jerozolimskie 54, 00-024 Warszawa', 89, 11),
+  ('Parking Galeria Mokotow', 'ul. Woloska 12, 02-675 Warszawa', 96, 4);
 
 ALTER TABLE parking OWNER to backendUser;
